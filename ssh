@@ -1,0 +1,5 @@
+# Copy from remote server to local
+scp -r user@address:/home/user/directory ~/local_path
+
+# Http tunneling over ssh
+ssh -L 249:127.0.0.1:80 user@address

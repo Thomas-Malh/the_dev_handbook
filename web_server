@@ -1,0 +1,87 @@
+# Add SSL to a currently only http website for Apache2
+ `sudo a2enmod ssl`
+ `sudo certbot --apache -d my_domain_name.com`
+ # If you want to renew ssl certificates (all certbot managed websites)
+ `sudo certbot renew`
+
+# Reverse proxy for NGINX
+ ## You first need to have an enabled website
+ ## Then declare upstreams in your website nginx config file
+ ```
+	upstream angular_server {
+		server 127.0.0.1:3000;
+	}
+	upstream express_api {
+		server 127.0.0.1:5000;
+	}
+
+	server {
+		### *Some config declarations that don't interact with reverse proxy config*
+
+		location / {
+			include proxy_params;
+			proxy_pass http://angular_server;
+		}
+
+		location /api {
+			include proxy_params;
+			proxy_pass http://express_api;
+		}
+	}
+ ```
+ ## Save your NGINX website config file then restart the service
+ `sudo service nginx restart`
+ ## You are now able to access different web servers from the outside on the same NGINX port
+
+# Add SSL certificate to a NGINX website
+ ## Install certbot and its NGINX package
+ `sudo add-apt-repository ppa:certbot/certbot`
+ `sudo apt install python-certbot-nginx`
+ ## Then create certificate(s) according to your asked informations
+ `sudo certbot --nginx -d my.domain_name.com`
+
+# Load testing your web application
+ ## Using Artillery
+  ### Install Artillery package using NPM
+  `sudo npm install -g artillery --unsafe-perm`
+  ### If everything works, you should now be able to use artillery :
+  `artillery quick --count 10000 -n 200 https://my.website.com/`
+  ### This one will create 10000 virtual clients, and each will perform 200 http requests
+  ### This test will make the cpu and net interfaces load increasing
+
+# Monitoring your server
+ ## Many tools exists, here are my basics 
+
+  ## HTOP
+   `(sudo) htop`
+   ### In addition of listing processes and system load chart (at the top), you can quicly search and kill any process (depends on your user rights)
+   ### F3 for searching by name, SPACE for selecting process, F9 to select the way to kill it
+
+  ## IFTOP
+   `sudo iftop`
+   ### It only monitor net interfaces activity, show connections and its data rates
+	
+  ## AppMetrics Dash for NodeJS app monitoring
+   `sudo npm i -g appmetrics-dash --unsafe-perm`
+   ### Include and attach AppMetrics to your NodeJS app
+   ```
+	var dash = require('appmetrics-dash');
+	dash.attach();
+   ```
+   ### You may now be able to see metrics of your app on the '/appmetrics-dash' url
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

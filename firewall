@@ -1,0 +1,18 @@
+# Install UFW firewall
+`apt install ufw`
+
+# Enable UFW correctly
+`ufw allow in 22/tcp`
+`ufw allow out 22/tcp`
+`ufw allow in 80/tcp`
+`ufw allow out 80/tcp`
+`ufw allow out 443/tcp`
+`ufw allow in 443/tcp`
+`ufw allow out 25/tcp`
+`ufw allow out 110/tcp`
+
+# Verify UFW state
+`ufw status verbose`
+
+# Enable firewall
+`ufw enable`

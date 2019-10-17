@@ -1,0 +1,5 @@
+# Prevent from commiting change if one failed
+ActiveRecord::Base.transaction do
+   john.update!(money: john.money + 100)
+   ted.update!(money: ted.money - 100)
+end
