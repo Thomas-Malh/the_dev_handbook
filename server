@@ -1,0 +1,9 @@
+# Auto mount a partition
+sudo vim /etc/fstab
+/dev/sda2       /media/mount_point/               ext4    defaults        0       1
+
+# Retrieve user uid
+cat /etc/passwd | grep my_user_name
+
+# Mount NTFS filesystem with specified owner and group
+sudo mount -t ntfs-3g -o uid=1000,gid=33 /dev/sdc3 /media/mount_point
