@@ -70,18 +70,11 @@
    ```
    ### You may now be able to see metrics of your app on the '/appmetrics-dash' url
 
+# Install paid SSL certificate
+openssl req -new -newkey rsa:2048 -nodes -keyout server.key -out server.csr
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Redirect a path to another in NGINX
+location /my/path {
+	return 301 /my/new/path;
+}
 

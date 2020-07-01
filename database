@@ -2,7 +2,7 @@
 psql -h localhost -U user_name -d database_name -W -f dump.sql -p 5434
 
 
-# Connect with postgresql default user
+# Connect with postgresql default superuser
 sudo -u postgres psql
 
 # Create database
@@ -13,3 +13,8 @@ create user username with encrypted password 'mysecurepassword';
 
 # Grand privileges to the created user
 grant all privileges on database my_database_name to username;
+
+
+CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON database_name . * TO 'username'@'localhost';
+FLUSH PRIVILEGES;
